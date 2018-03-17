@@ -1,6 +1,6 @@
 module Questao2 where
 
-import qualified Data.Set as S
+import qualified Data.Set as S (Set, union, empty, singleton, toList)
 
 -- Verificador de tautologia --
 
@@ -55,6 +55,7 @@ resizeBin n bin
                     len = length bin
 
 -- | bools :: Int -> [[Bool]]
+bools :: Int -> [[Bool]]
 bools n = map (map intToBool . resizeBin n . toBin) [x | x <- [0.. (2 ^ n - 1)]]
         where
             intToBool i = if i == 0 then False else True
@@ -67,7 +68,7 @@ substs p = map (zip vs) bs
             bs = bools $ length vs
 
 -- | avalia se uma Prop é tautologia
--- isTaut :: Prop -> Bool
+isTaut :: Prop -> Bool
 isTaut prop = foldr (&&) True $ map (\sub -> eval sub prop) subsList
             where
                 subsList = substs prop
